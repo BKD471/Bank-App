@@ -82,6 +82,32 @@ const displayMovements=function(movements)
 
 displayMovements(account1.movements)
 
+
+const createUserNames=function(accs)
+{
+
+   accs.forEach(function(acc){
+
+    acc.username=acc.owner.toLowerCase().split(' ').map( (e) => e[0]).join('')
+   })
+
+}
+createUserNames(accounts)
+
+
+
+
+
+
+
+
+const currencies = new Map([
+  ['USD', 'United States dollar'],
+  ['EUR', 'Euro'],
+  ['GBP', 'Pound sterling'],
+]);
+
+//////////////////////////////ForEach/////////////////////////////
 // const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
@@ -98,11 +124,30 @@ displayMovements(account1.movements)
 //   console.log(array)
 // })
 
+/////////////////////////MAP///////////////////////////
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
-const currencies = new Map([
-  ['USD', 'United States dollar'],
-  ['EUR', 'Euro'],
-  ['GBP', 'Pound sterling'],
-]);
+// const temp=movements.map(function(e){
+//      return e*1.1;
+// })
+
+// const euroToUsd=1.1;
+// const movementsUSD=movements.map( (mov) => mov*euroToUsd);
+//console.log(movementsUSD)
 
 
+// const movementsDescription=movements.map( (mov,index) =>{
+//  return  `Movement:${index+1} you ${mov>0? 'Deposited ':'Withdrew'}: ${Math.abs(mov)}`
+// })
+
+// console.log(movementsDescription)
+
+/////////////////////FILTER//////////////////////////
+
+// const movements=[200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// const filteredDeposits=movements.filter((e)=> e>0)
+// console.log(filteredDeposits)
+
+// const filteredWithdrawl=movements.filter( e=> e<0)
+// console.log(filteredWithdrawl)
