@@ -1,0 +1,125 @@
+//////////////////////////////ForEach/////////////////////////////
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+/////////////////////////////////////////////////
+
+// movements.forEach(function(element,index,array){
+//   if(element>0)
+//   {
+//    console.log(`${index} you deposited: ${element}`)
+//   }
+//   else
+//   {
+//    console.log(`${index} you Withdrawn: ${Math.abs(element)}`)
+//   }
+//   console.log(array)
+// })
+
+/////////////////////////MAP///////////////////////////
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// const temp=movements.map(function(e){
+//      return e*1.1;
+// })
+
+// const euroToUsd=1.1;
+// const movementsUSD=movements.map( (mov) => mov*euroToUsd);
+//console.log(movementsUSD)
+
+
+// const movementsDescription=movements.map( (mov,index) =>{
+//  return  `Movement:${index+1} you ${mov>0? 'Deposited ':'Withdrew'}: ${Math.abs(mov)}`
+// })
+
+// console.log(movementsDescription)
+
+/////////////////////FILTER//////////////////////////
+
+// const movements=[200, 450, -400, 3000, -650, -130, 70, 1300];
+
+// const filteredDeposits=movements.filter((e)=> e>0)
+// console.log(filteredDeposits)
+
+// const filteredWithdrawl=movements.filter( e=> e<0)
+// console.log(filteredWithdrawl)
+
+
+////////////////REDUCE///////////////////
+
+// const movements=[200,300,-400,700,-500,60000];
+// // accumulator----> snowball
+// const balance=movements.reduce( (accumulator,current,index,arr)=> {
+//   console.log(`${index}:${accumulator}`)
+//   return accumulator+current},0);
+// console.log(balance);
+
+
+// const numbers=[798,356,4664,7931,51321,12,354,287,313546,245,213];
+// const bigestOfAll=numbers.reduce( (acc,curr) => {
+//   if(acc>curr)
+//        return acc
+//   else
+//        return curr     
+// },numbers[0]);
+
+// console.log(bigestOfAll)
+
+// const calcAverageHumanAge=function(ages)
+// {
+
+//    const dogAge=ages.map((e)=> {
+//       if(e<=2)
+//       {
+//         return e*2;
+//       }
+//       else
+//       {
+//         return 16+e*4;
+//       } 
+//    })
+   
+//   console.log(dogAge);
+//    const filteredAge=dogAge.filter( e => e>=18)
+//    console.log(filteredAge)
+
+//    const totalAge=filteredAge.reduce( (acc,curr)=> acc+curr,0);
+//    const avgAge=totalAge/filteredAge.length;
+//    console.log(avgAge)
+// }
+
+// //[5, 2, 4, 1, 15, 8, 3]
+// //[16, 6, 10, 5, 6, 1, 4]
+// calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+// calcAverageHumanAge([16,6,10,5,6,1,4]);
+
+//////////////////////////CHAINING//Pipeline///////////////////////////
+// const movements=[200,450,-400,3000,-650,-130,70,1300];
+// const euroToUsd=1.1
+// const totalDeposits=movements.filter( e=> e>0).map((e) => e*euroToUsd).reduce( (acc,curr) => acc+curr,0);
+// console.log(totalDeposits);
+
+
+// const calcAverageHumanAge=ages=>ages.map((e)=> e<=2 ? e*2: 16+e*4).filter( e => e>=18).reduce( (acc,curr,i,arr)=> acc+curr/arr.length,0);
+  
+
+// console.log(calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]))
+// console.log(calcAverageHumanAge([16,6,10,5,6,1,4]))
+
+//////////////////////Find////////////////////////////
+// const movements=[200,450,-400,3000,-650,-130,70,1300];
+// const firstWithdrawl=movements.find( e => e<0);
+// console.log(firstWithdrawl);
+
+
+// const account=accounts.find( acc => acc.username==='stw');
+// console.log(account);
+
+
+// for(const acc of accounts)
+// {
+//   if(acc.owner==='Jessica Davis')
+//   {
+//     console.log(acc);
+//     break;
+//   }
+// }

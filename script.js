@@ -79,8 +79,31 @@ const displayMovements=function(movements)
            containerMovements.insertAdjacentHTML('afterbegin',html);
    });
 }
-
 displayMovements(account1.movements)
+
+
+
+const calcDisplayBalance=function(movements)
+{
+   const balance=movements.reduce( (acc,curr) => acc+curr ,0)
+   labelBalance.textContent=`${balance} €`;
+}
+calcDisplayBalance(account1.movements);
+
+
+
+const calcDisplaySummary=function(movements)
+{
+  
+   const income=movements.filter(e => e>0).reduce( (acc,curr) => acc+curr,0);
+   const expenditure=movements.filter(e=> e<0).reduce( (acc,curr)=> acc+curr,0);
+   const interest=movements.filter(e => e>0).map( e => (e*1.2)/100).filter(e=> e>=1).reduce( (acc,intrst) => acc+intrst);
+   labelSumIn.textContent=`${income} €`;
+   labelSumOut.textContent=`${Math.abs(expenditure)} €`;
+   labelSumInterest.textContent=`${interest}  €`
+}
+calcDisplaySummary(account1.movements)
+
 
 
 const createUserNames=function(accs)
@@ -98,56 +121,9 @@ createUserNames(accounts)
 
 
 
-
-
-
 const currencies = new Map([
   ['USD', 'United States dollar'],
   ['EUR', 'Euro'],
   ['GBP', 'Pound sterling'],
 ]);
 
-//////////////////////////////ForEach/////////////////////////////
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-
-/////////////////////////////////////////////////
-
-// movements.forEach(function(element,index,array){
-//   if(element>0)
-//   {
-//    console.log(`${index} you deposited: ${element}`)
-//   }
-//   else
-//   {
-//    console.log(`${index} you Withdrawn: ${Math.abs(element)}`)
-//   }
-//   console.log(array)
-// })
-
-/////////////////////////MAP///////////////////////////
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-
-// const temp=movements.map(function(e){
-//      return e*1.1;
-// })
-
-// const euroToUsd=1.1;
-// const movementsUSD=movements.map( (mov) => mov*euroToUsd);
-//console.log(movementsUSD)
-
-
-// const movementsDescription=movements.map( (mov,index) =>{
-//  return  `Movement:${index+1} you ${mov>0? 'Deposited ':'Withdrew'}: ${Math.abs(mov)}`
-// })
-
-// console.log(movementsDescription)
-
-/////////////////////FILTER//////////////////////////
-
-// const movements=[200, 450, -400, 3000, -650, -130, 70, 1300];
-
-// const filteredDeposits=movements.filter((e)=> e>0)
-// console.log(filteredDeposits)
-
-// const filteredWithdrawl=movements.filter( e=> e<0)
-// console.log(filteredWithdrawl)
