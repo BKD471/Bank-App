@@ -79,7 +79,7 @@ const displayMovements=function(movements)
            containerMovements.insertAdjacentHTML('afterbegin',html);
    });
 }
-displayMovements(account1.movements)
+// displayMovements(account1.movements)
 
 
 
@@ -88,21 +88,21 @@ const calcDisplayBalance=function(movements)
    const balance=movements.reduce( (acc,curr) => acc+curr ,0)
    labelBalance.textContent=`${balance} €`;
 }
-calcDisplayBalance(account1.movements);
+//calcDisplayBalance(account1.movements);
 
 
 
-const calcDisplaySummary=function(movements)
+const calcDisplaySummary=function(acc)
 {
   
-   const income=movements.filter(e => e>0).reduce( (acc,curr) => acc+curr,0);
-   const expenditure=movements.filter(e=> e<0).reduce( (acc,curr)=> acc+curr,0);
-   const interest=movements.filter(e => e>0).map( e => (e*1.2)/100).filter(e=> e>=1).reduce( (acc,intrst) => acc+intrst);
+   const income=acc.movements.filter(e => e>0).reduce( (acc,curr) => acc+curr,0);
+   const expenditure=acc.movements.filter(e=> e<0).reduce( (acc,curr)=> acc+curr,0);
+   const interest=acc.movements.filter(e => e>0).map( e => (e*acc.interestRate)/100).filter(e=> e>=1).reduce( (acc,intrst) => acc+intrst);
    labelSumIn.textContent=`${income} €`;
    labelSumOut.textContent=`${Math.abs(expenditure)} €`;
    labelSumInterest.textContent=`${interest}  €`
 }
-calcDisplaySummary(account1.movements)
+//calcDisplaySummary(account1.movements)
 
 
 
@@ -120,10 +120,32 @@ createUserNames(accounts)
 
 
 
-
 const currencies = new Map([
   ['USD', 'United States dollar'],
   ['EUR', 'Euro'],
   ['GBP', 'Pound sterling'],
 ]);
 
+let currentAccount;
+
+btnLogin.addEventListener('click', e => {
+   e.preventDefault();
+    currentAccount=accounts.find( account => account.username===inputLoginUsername.value);
+    
+    if(currentAccount?.pin===Number(inputLoginPin.value))
+    {    
+         labelWelcome.textContent=`Welcome back, ${currentAccount.owner.split(' ')[0]}`
+         containerApp.style.opacity=100;
+         
+         inputLoginUsername.value=inputLoginPin.value='';
+          inputLoginPin.blur();
+
+         displayMovements(currentAccount.movements);
+         calcDisplayBalance(currentAccount.movements);
+        calcDisplaySummary(currentAccount);
+      
+
+    }
+   
+  
+  })
