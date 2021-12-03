@@ -61,11 +61,9 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-/////////////////////////////////////////////////
-/////////////////////////////////////////////////
-// LECTURES
 
 
+// Displaying all the credit and debit history
 const displayMovements=function(movements)
 {
   containerMovements.innerHTML='';
@@ -79,22 +77,21 @@ const displayMovements=function(movements)
            containerMovements.insertAdjacentHTML('afterbegin',html);
    });
 }
-// displayMovements(account1.movements)
 
 
 
-const calcDisplayBalance=function(movements)
+//Displaying the balance available for that account
+const calcDisplayBalance=function(acc)
 {
-   const balance=movements.reduce( (acc,curr) => acc+curr ,0)
-   labelBalance.textContent=`${balance} €`;
+   acc.balance=acc.movements.reduce( (acc,curr) => acc+curr ,0)
+   labelBalance.textContent=`${acc.balance} €`;
 }
-//calcDisplayBalance(account1.movements);
 
 
 
+//Displaying the summary  at the below  in footer
 const calcDisplaySummary=function(acc)
 {
-  
    const income=acc.movements.filter(e => e>0).reduce( (acc,curr) => acc+curr,0);
    const expenditure=acc.movements.filter(e=> e<0).reduce( (acc,curr)=> acc+curr,0);
    const interest=acc.movements.filter(e => e>0).map( e => (e*acc.interestRate)/100).filter(e=> e>=1).reduce( (acc,intrst) => acc+intrst);
@@ -102,21 +99,16 @@ const calcDisplaySummary=function(acc)
    labelSumOut.textContent=`${Math.abs(expenditure)} €`;
    labelSumInterest.textContent=`${interest}  €`
 }
-//calcDisplaySummary(account1.movements)
 
 
-
+//Add usernames to objects
 const createUserNames=function(accs)
 {
-
    accs.forEach(function(acc){
-
     acc.username=acc.owner.toLowerCase().split(' ').map( (e) => e[0]).join('')
    })
-
 }
 createUserNames(accounts)
-
 
 
 
@@ -126,12 +118,19 @@ const currencies = new Map([
   ['GBP', 'Pound sterling'],
 ]);
 
-let currentAccount;
+// Updating the UI
+const updateUI=(acc)=>
+{
+    displayMovements(acc.movements);
+         calcDisplayBalance(acc);
+        calcDisplaySummary(acc);
+}
 
+// Login Functionality 
+let currentAccount;
 btnLogin.addEventListener('click', e => {
    e.preventDefault();
-    currentAccount=accounts.find( account => account.username===inputLoginUsername.value);
-    
+    currentAccount=accounts.find( account => account.username===inputLoginUsername.value); 
     if(currentAccount?.pin===Number(inputLoginPin.value))
     {    
          labelWelcome.textContent=`Welcome back, ${currentAccount.owner.split(' ')[0]}`
@@ -140,12 +139,25 @@ btnLogin.addEventListener('click', e => {
          inputLoginUsername.value=inputLoginPin.value='';
           inputLoginPin.blur();
 
-         displayMovements(currentAccount.movements);
-         calcDisplayBalance(currentAccount.movements);
-        calcDisplaySummary(currentAccount);
-      
-
+         updateUI(currentAccount);
     }
-   
-  
   })
+
+
+
+  // Transfer Amount from  one account to another
+  btnTransfer.addEventListener('click', (e)=> {
+    e.preventDefault();
+    const amount=Number(inputTransferAmount.value);
+    const receiverAccount=accounts.find( acc => acc.username===inputTransferTo.value);
+
+    inputTransferAmount.value=inputTransferTo.value='';
+
+    if(receiverAccount && amount >0 &&  amount<=currentAccount.balance && receiverAccount?.username!==currentAccount.username)
+    {
+      currentAccount.movements.push(-amount);
+      receiverAccount.movements.push(amount);
+      updateUI(currentAccount);
+    }
+
+  });
