@@ -162,7 +162,7 @@ btnLogin.addEventListener('click', e => {
 
   });
 
-//whose deposit is more tha 10%
+
 
 
 
