@@ -162,6 +162,24 @@ btnLogin.addEventListener('click', e => {
 
   });
 
+//whose deposit is more tha 10%
+
+
+
+// Giving loan to those who has atleast 10% of requested amount as deposit in account
+btnLoan.addEventListener('click', e => {
+
+        e.preventDefault();
+        const amount=Number(inputLoanAmount.value);
+        if(amount>0 && currentAccount.movements.some( curr => curr>= amount*0.1))
+        {
+             currentAccount.movements.push(amount);
+             updateUI(currentAccount);
+        }
+         inputLoanAmount.value=''
+})
+
+
 // Deleting user account
   btnClose.addEventListener( 'click',(e)=>{
           e.preventDefault();
@@ -176,3 +194,7 @@ btnLogin.addEventListener('click', e => {
           inputCloseUsername.value=inputClosePin.value='';
 
   });
+
+
+
+ 

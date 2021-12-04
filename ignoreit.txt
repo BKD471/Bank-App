@@ -123,3 +123,12 @@
 //     break;
 //   }
 // }
+
+
+ /*const overAllBalance=accounts.map( acc =>  acc.movements).flat().reduce( (acc,curr) => curr+acc,0)
+
+console.log(overAllBalance);
+
+
+const overAllBalanceMap=accounts.flatMap( acc =>  acc.movements).reduce( (acc,curr) => curr+acc,0)
+console.log(overAllBalanceMap)*/
