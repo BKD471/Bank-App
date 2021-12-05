@@ -132,3 +132,85 @@ console.log(overAllBalance);
 
 const overAllBalanceMap=accounts.flatMap( acc =>  acc.movements).reduce( (acc,curr) => curr+acc,0)
 console.log(overAllBalanceMap)*/
+
+/*
+function findEvenIndex(arr) {
+
+  let n=arr.length;
+    let lsum=0;
+    let rsum=0;
+    lpsum=arr.map( (curr) =>lsum+=curr);
+    rpsum=arr.map( (curr,i,arr) => rsum=rsum+arr[arr.length-i-1]).reverse();
+    for(let i=0;i<n;i++)
+    {
+        if(rpsum[i]===lpsum[i])
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+*/
+
+
+////////////////////SORT///////////////////
+  const movements=[200,450,-400,3000,-650,-130,70,1300];
+
+// // return <0 A,B  (order intact)
+// //return >0  B,A   (order change)
+
+
+// //Ascending
+//   // movements.sort( (a,b) => {
+
+//   //   if(a>b)
+//   //     return 1;
+//   //   if(a<b)
+//   //     return -1;  
+//   // })
+
+//   //Ascending
+//   movements.sort( (a,b) => a-b)
+
+//   console.log(movements)
+//   console.log(movements)
+
+//   //Descending
+//   // movements.sort( (a,b) => {
+
+//   //   if(a>b)
+//   //     return -1;
+//   //   if(a<b)
+//   //     return 1;  
+//   // })
+// //Ascending
+// movements.sort( (a,b) => b-a)
+
+// console.log(movements)
+
+//   console.log(movements)
+
+
+// const y=Array.from({length:7}, ()=>1)
+// console.log(y)
+
+// const z=Array.from({length:7}, (_,i)=>i+1)
+// console.log(z)
+
+
+// const diceRolls=Array.from({length:100}, (_,i)=> Math.trunc(Math.random()*6)+1);
+// console.log(diceRolls);
+
+// // Arrays.from is used to convert array like object int pure array
+// // changing  the queryselector(which is nodelist(array like object) but not pure array ) into array
+// labelBalance.addEventListener('click', ()=>{
+
+//   // movvementsu is now array so we can use map method on it;
+//    const movementsUI= Array.from(document.querySelectorAll('.movements__value'),(el)=> el.textContent.replace('€',''));
+
+//    // Method 2  but here we have to  use map separately
+//    const movementsUI_2=[...document.querySelectorAll('.movements__value')];
+//    console.log(movementsUI);
+
+// });
+

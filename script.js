@@ -64,10 +64,11 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 
 // Displaying all the credit and debit history
-const displayMovements=function(movements)
+const displayMovements=function(movements,sort=false)
 {
+  const mov= sort? movements.slice().sort( (a,b) => a-b) : movements;
   containerMovements.innerHTML='';
-  movements.forEach(function(mov,i){
+  mov.forEach(function(mov,i){
     const type= mov>0? 'deposit':'withdrawal';
     const html=`
             <div class="movements__row">
@@ -197,4 +198,17 @@ btnLoan.addEventListener('click', e => {
 
 
 
- 
+
+//Sorting the Movements and showing them in display 
+let sortStatus=false;
+
+btnSort.addEventListener('click',(e) =>{
+  e.preventDefault();
+  sortStatus=!sortStatus;
+   displayMovements(currentAccount.movements,sortStatus);
+  
+})
+
+
+
+
