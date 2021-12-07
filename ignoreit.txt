@@ -214,3 +214,27 @@ function findEvenIndex(arr) {
 
 // });
 
+/*console.log(Number.parseInt('300px',10));  //base 10
+console.log(Number.parseInt('e65',10));
+
+// best way to read a number out of a string from css
+console.log(Number.parseInt('2.5 rem',10));
+console.log(Number.parseFloat('2.5 rem',10));
+
+// check if value is nat a no
+console.log(Number.isNaN('20'));
+console.log(Number.isNaN(20));
+console.log(Number.isNaN(+'20iu'));
+console.log(Number.isNaN(99/0));
+
+
+// Best way to check whether input is number
+console.log(Number.isFinite(20));
+console.log(Number.isFinite('20'));
+console.log(Number.isFinite(+'20px'));
+console.log(Number.isFinite(654/0));
+
+//check integer
+console.log(Number.isInteger(20));
+console.log(Number.isInteger(20.0));
+console.log(Number.isInteger(20/7));*/

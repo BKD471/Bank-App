@@ -7,9 +7,22 @@
 // Data
 const account1 = {
   owner: 'Jonas Schmedtmann',
-  movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
+  movements: [200, 455.23, -306.5, 25000, -642.21, -133.9, 79.97, 1300],
   interestRate: 1.2, // %
   pin: 1111,
+
+  movementsDates: [
+    '2019-11-18T21:31:17.178Z',
+    '2019-12-23T07:42:02.383Z',
+    '2020-01-28T09:15:04.904Z',
+    '2020-04-01T10:17:24.185Z',
+    '2020-05-08T14:11:59.604Z',
+    '2020-05-27T17:01:17.194Z',
+    '2020-07-11T23:36:17.929Z',
+    '2020-07-12T10:51:36.790Z',
+  ],
+  currency: 'EUR',
+  locale: 'pt-PT', // de-DE
 };
 
 const account2 = {
@@ -17,23 +30,22 @@ const account2 = {
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
   pin: 2222,
+
+  movementsDates: [
+    '2019-11-01T13:15:33.035Z',
+    '2019-11-30T09:48:16.867Z',
+    '2019-12-25T06:04:23.907Z',
+    '2020-01-25T14:18:46.235Z',
+    '2020-02-05T16:33:06.386Z',
+    '2020-04-10T14:43:26.374Z',
+    '2020-06-25T18:49:59.371Z',
+    '2020-07-26T12:01:20.894Z',
+  ],
+  currency: 'USD',
+  locale: 'en-US',
 };
 
-const account3 = {
-  owner: 'Steven Thomas Williams',
-  movements: [200, -200, 340, -300, -20, 50, 400, -460],
-  interestRate: 0.7,
-  pin: 3333,
-};
-
-const account4 = {
-  owner: 'Sarah Smith',
-  movements: [430, 1000, 700, 50, 90],
-  interestRate: 1,
-  pin: 4444,
-};
-
-const accounts = [account1, account2, account3, account4];
+const accounts = [account1, account2];
 
 // Elements
 const labelWelcome = document.querySelector('.welcome');
@@ -73,10 +85,14 @@ const displayMovements=function(movements,sort=false)
     const html=`
             <div class="movements__row">
               <div class="movements__type movements__type--${type}">${i+1}${type}</div>
-              <div class="movements__value">${mov}€</div>
+              <div class="movements__value">${mov.toFixed(2)}€</div>
             </div>`;
            containerMovements.insertAdjacentHTML('afterbegin',html);
    });
+   [...document.querySelectorAll('.movements__row')].forEach( (Tray,index) => {
+    if(index%2==0) Tray.style.backgroundColor='#dee2e6';
+   
+});
 }
 
 
@@ -85,7 +101,7 @@ const displayMovements=function(movements,sort=false)
 const calcDisplayBalance=function(acc)
 {
    acc.balance=acc.movements.reduce( (acc,curr) => acc+curr ,0)
-   labelBalance.textContent=`${acc.balance} €`;
+   labelBalance.textContent=`${acc.balance.toFixed(2)} €`;
 }
 
 
@@ -96,9 +112,10 @@ const calcDisplaySummary=function(acc)
    const income=acc.movements.filter(e => e>0).reduce( (acc,curr) => acc+curr,0);
    const expenditure=acc.movements.filter(e=> e<0).reduce( (acc,curr)=> acc+curr,0);
    const interest=acc.movements.filter(e => e>0).map( e => (e*acc.interestRate)/100).filter(e=> e>=1).reduce( (acc,intrst) => acc+intrst);
-   labelSumIn.textContent=`${income} €`;
-   labelSumOut.textContent=`${Math.abs(expenditure)} €`;
-   labelSumInterest.textContent=`${interest}  €`
+
+   labelSumIn.textContent=`${income.toFixed(2)} €`;
+   labelSumOut.textContent=`${Math.abs(expenditure).toFixed(2)} €`;
+   labelSumInterest.textContent=`${interest.toFixed(2)}  €`
 }
 
 
@@ -131,8 +148,10 @@ const updateUI=(acc)=>
 let currentAccount;
 btnLogin.addEventListener('click', e => {
    e.preventDefault();
+   
     currentAccount=accounts.find( account => account.username===inputLoginUsername.value); 
-    if(currentAccount?.pin===Number(inputLoginPin.value))
+    // due to type coercion anything that starts with + is converted to number, no need of Number()
+    if(currentAccount?.pin===+inputLoginPin.value)
     {    
          labelWelcome.textContent=`Welcome back, ${currentAccount.owner.split(' ')[0]}`
          containerApp.style.opacity=100;
@@ -149,7 +168,8 @@ btnLogin.addEventListener('click', e => {
   // Transfer Amount from  one account to another
   btnTransfer.addEventListener('click', (e)=> {
     e.preventDefault();
-    const amount=Number(inputTransferAmount.value);
+    // due to type coercion anything that starts with + is converted to number, no need of Number()
+    const amount=+inputTransferAmount.value;
     const receiverAccount=accounts.find( acc => acc.username===inputTransferTo.value);
 
     inputTransferAmount.value=inputTransferTo.value='';
@@ -171,7 +191,8 @@ btnLogin.addEventListener('click', e => {
 btnLoan.addEventListener('click', e => {
 
         e.preventDefault();
-        const amount=Number(inputLoanAmount.value);
+        // due to type coercion anything that starts with + is converted to number, no need of Number()
+        const amount=Math.floor(inputLoanAmount.value);
         if(amount>0 && currentAccount.movements.some( curr => curr>= amount*0.1))
         {
              currentAccount.movements.push(amount);
@@ -184,8 +205,9 @@ btnLoan.addEventListener('click', e => {
 // Deleting user account
   btnClose.addEventListener( 'click',(e)=>{
           e.preventDefault();
+          // due to type coercion anything that starts with + is converted to number, no need of Number()
           
-          if(inputCloseUsername.value===currentAccount.username && Number(inputClosePin.value)===currentAccount.pin)
+          if(inputCloseUsername.value===currentAccount.username && +inputClosePin.value===currentAccount.pin)
           {
             const index=accounts.findIndex( acc=> acc.username===currentAccount.username);
             accounts.splice(index,1);
@@ -207,8 +229,15 @@ btnSort.addEventListener('click',(e) =>{
   sortStatus=!sortStatus;
    displayMovements(currentAccount.movements,sortStatus);
   
+});
+
+
+
+
+
+labelBalance.addEventListener('click', () => {
+ 
+
 })
-
-
 
 
