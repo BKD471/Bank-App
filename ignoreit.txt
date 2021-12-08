@@ -272,3 +272,26 @@ const future = new Date(2022, 11, 25);
 // const gapOfDays = calcDaysPassed(new Date(2020, 2, 10), new Date(2020, 2, 25));
 // console.log(gapOfDays);
 
+/*
+const stacks = ["MEAN", "MERN", "Django"];
+
+const stackTimer = setTimeout(
+  (tech1, tech2) => console.log(`I will be pro in ${tech1} ${tech2}`),
+  3000,
+  ...stacks
+);
+
+for (let i = 0; i < 3; i++) {
+  console.log(i);
+}
+if (stacks.includes("Django")) clearTimeout(stackTimer);
+*/
+
+
+//setInterval(() => {
+//   const present = new Date();
+//   const hours = present.getHours();
+//   const min = present.getMinutes();
+//   const seconds = present.getSeconds();
+//   console.log(`${hours}:${min}:${seconds}`);
+// }, 1000);
